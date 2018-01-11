@@ -1,0 +1,8 @@
+<%= simple_form_for @instructor, :html => {:multipart =>  true} do |f| %>
+	<%= select_tag( :category_id, options_for_select(@categories), :prompt => "Select a class format") %>
+	<%= f.file_field :instructor_img %>
+	<%= f.input :name, label: "Instructor Name" %>
+	<%= f.input :description %>
+	<%= f.input :format, label: "Class format" %>
+	<%= f.button :submit, :class => 'btn-custom2' %>
+<% end %>

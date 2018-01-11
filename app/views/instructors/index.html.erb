@@ -1,0 +1,20 @@
+<h1 class="current-category"><%= params[:category] %></h1>
+
+<% if @instructors.count == 0 %>
+	<h1>There are no instructors currently in this category</h1>
+<% else %>
+	
+	<div class="row">
+	
+		<% @instructors.each do |instructor| %>
+			<div class="col-md-3">
+				<a href="/instructors/<%= instructor.id %>">
+					<%= image_tag instructor.instructor_img.url(:instructor_index), class:"instructor" %>
+				</a>
+			</div>
+		<% end %>
+
+	</div>
+
+<% end %>
+

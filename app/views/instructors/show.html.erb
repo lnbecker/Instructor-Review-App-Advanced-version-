@@ -1,0 +1,69 @@
+<div class="row">
+	
+	<div class="col-md-4">
+		<%= image_tag @instructor.instructor_img.url("instructor_show"), class: "instructor-show" %>
+	</div>
+
+	<div class="col=md-8">
+
+		<div class="book-info">
+			<h2 class="instructor-name"><%= @instructor.name %></h2>
+			<h3 class="instructor-format"><span>Class format: </span><%= @instructor.format %></h3>
+			<h3 class="avg-rating">Average Rating</h2>
+			<div class="average-review-rating" data-score=<%= @average_review %>></div>
+			<span class="number-of-reviews">Based on <%= @instructor.reviews.count %> reviews</span>
+			<p class="instructor-desc"><%= @instructor.description %></p>
+		</div>
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		<div class="reviews">
+			<!--Where reviews/ratings will go-->
+			<h1>Reviews</h1>
+			<!--review partial for each review-->
+			<%= render @instructor.reviews %>
+			<div>
+				<%= link_to "Add Review", new_instructor_review_path(@instructor), class: "btn-custom" %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="links btn-group">
+
+	<%= link_to "Back", root_path, class: "btn btn-custom" %>
+
+	<!--Make sure user can still view show page for instructor if not signed in-->
+	<% if user_signed_in? %>
+		<!--Make sure user who didn't create instructor can't edit their profiles-->
+		<% if @instructor.user_id == current_user.id %>
+			<%= link_to "Edit", edit_instructor_path(@instructor), class: "btn btn-custom" %>
+			<%= link_to "Delete", instructor_path(@instructor), method: :delete, data: { confirm: "Are you sure you want to delete this instructor?" }, class: "btn btn-custom" %>
+		<% end %>
+	<% end %>
+
+</div>
+
+<!--for Raty plugin--> 
+<script>
+	$('.review-rating').raty({
+		readOnly: true,
+		score: function() {
+			return $(this).attr('data-score');
+		},
+		path: '/assets'
+	});
+</script>
+
+<script>
+	$('.average-review-rating').raty({
+		readOnly: true,
+		path: '/assets/',
+		score: function() {
+			return $(this).attr('data-score')
+		}
+	});
+</script>

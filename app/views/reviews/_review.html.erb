@@ -1,0 +1,17 @@
+<div class="review">
+
+	<div class="review-rating" data-score="<%= review.rating %>"> </div>
+	<p class="review-comment"><%= review.comment %></p>
+
+	<!--Only let review creator edit/delete the review-->
+	<% if user_signed_in? %>
+		<% if review.user_id == current_user.id %>
+
+		<div class="links btn-group">
+			<%= link_to "Edit", edit_instructor_review_path(review.instructor, review), class: "btn btn-custom" %>
+			<%= link_to "Delete", instructor_review_path(review.instructor, review), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-custom" %>
+		</div>
+		
+		<% end %>
+	<% end %>
+</div>
